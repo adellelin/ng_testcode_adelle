@@ -18,8 +18,7 @@ SceneOne::SceneOne()
 }
 void SceneOne::setup() {
     //note Adelle, you'll need to pass in your network here for real to get this to acutally work.
-    //osc->setup("192.168.178.15", 8000);
-    osc->setup("172.16.42.11", 8000);
+    osc->setup("192.168.178.15", 8000);
     device->setup("/dev/tty.usbmodem1421");
     
 }

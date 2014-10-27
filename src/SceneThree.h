@@ -1,20 +1,22 @@
 //
-//  SceneTwo.h
+//  SceneThree.h
 //  NightGames
 //
-//  Created by Phoenix Perry on 18/10/14.
+//  Created by Adelle on 26/10/14.
 //
 //
 
-#ifndef __NightGames__SceneTwo__
-#define __NightGames__SceneTwo__
+#ifndef __NightGames__SceneThree__
+#define __NightGames__SceneThree__
+
+#include <iostream>
 
 #include <stdio.h>
 #include "ofmain.h"
-
-
 #include "Scene.h"
-class SceneTwo:public Scene{
+
+
+class SceneThree:public Scene{
 public:
     void setup();
     void draw();
@@ -32,9 +34,14 @@ public:
     
     int xpos;
     int ypos;
+    int myCircleX;
+    int myCircleY;
+    int myCircleRadius;
     
-    SceneTwo();
-    ~SceneTwo(); 
+    
+    SceneThree();
+    ~SceneThree();
 };
 
-#endif /* defined(__NightGames__SceneTwo__) */
+
+#endif /* defined(__NightGames__SceneThree__) */
