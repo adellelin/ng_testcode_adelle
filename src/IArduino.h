@@ -23,7 +23,7 @@ public:
     void testLedOff1();
     ofArduino ard;
     void keyPressed(int key);
-    bool		bSetupArduino;
+    bool bSetupArduino;
     ofSerial serial;
     
 private:

@@ -9,7 +9,7 @@
 #include "IArduino.h"
 #include <iostream>
 using namespace std;
-#define NUM_BYTES 2;
+
 
 // yo Adelle - send in ya port lady! :)
 void IArduino::setup(string port){
@@ -18,12 +18,9 @@ void IArduino::setup(string port){
     ofAddListener(ard.EInitialized, this, &IArduino::setupArd);
     bSetupArduino	= false; // flag so we setup arduino when its ready, you don't need to touch this
     
-}
-
-void IArduino::update(){
-  
-    // cout << ard.isArduinoReady() << " is the state of things" << endl;
-   
+    ofEnableSmoothing();
+    
+    
 }
 
 
@@ -47,7 +44,8 @@ void IArduino::setupArd(const int &version)
     ard.sendDigitalPinMode(3, ARD_INPUT);
     
     // set pin A0 to analog input
-    ard.sendAnalogPinReporting(0, ARD_ANALOG);
+    ard.sendAnalogPinReporting(0, ARD_INPUT);
+    //ard.sendAnalogPinReporting(4, ARD_OUTPUT);
     
     // if want to set pin D11 as PWM (analog output)
 	ard.sendDigitalPinMode(11, ARD_PWM);
@@ -56,42 +54,39 @@ void IArduino::setupArd(const int &version)
         //ofAddListener(ard.EDigitalPinChanged, this, &IArduino::digitalPinChanged);
         //ofAddListener(ard.EAnalogPinChanged, this, &IArduino::analogPinChanged);
     
-    
     cout << "up" <<endl;
    
 }
 
-//--------------------------------------------------------------
-void IArduino::digitalPinChanged(const int & pinNum) {
-    // do something with the digital input. here we're simply going to print the pin number and
-    // value to the screen each time it changes
-    cout << "digital pin: " + ofToString(3) + " = " + ofToString(ard.getDigital(3)) << endl;
+
+void IArduino::update(){
+    
+    cout << ard.isArduinoReady() << " is the state of things" << endl;
+    
+    auto sensorValue0 = ard.getAnalog(0);
+    auto sensorValNew0 = (unsigned int)sensorValue0 >> 2;
+    cout << sensorValNew0 << endl;
+    ard.update();
 }
-void IArduino::analogPinChanged(const int & pinNum) {
-    // do something with the digital input. here we're simply going to print the pin number and
-    // value to the screen each time it changes
-    cout << "analog pin: " + ofToString(1) + " = " + ofToString(ard.getAnalog(1)) << endl;
-                  }
 
 
 void IArduino::testLed(){
-    //be sending out power yo to an led on port 9
-    
-
+    // Sending out power to an led on port 9
     ard.sendDigital(9, ARD_HIGH);
-    //ard.sendDigital(10, ARD_HIGH);
-    //ard.sendDigital(11, ARD_HIGH);
+
 
     //and to receive data
     //auto num = ard.getDigital(9);
     //cout << num << endl;
-    ard.sendAnalogPinReporting(1, ARD_INPUT);
     ard.getAnalog(1);
-    float sensorValue = ard.getAnalog(0);
-    cout << sensorValue << endl;
+//    int sensorValue0 = ard.getAnalog(0);
+//    int sensorValNew0 = (unsigned int)sensorValue0 >> 3;
+//    float sensorValue1 = ard.getAnalog(1);
+//    cout << sensorValNew0 << sensorValue1 << endl;
     cout << "analog pin: " + ofToString(0) + " = " + ofToString(ard.getAnalog(0)) << endl;
     cout << "digital pin: " + ofToString(9) + " = " + ofToString(ard.getDigital(9)) << endl;
     
+    ard.update();
 }
 
 void IArduino::testLedOff(){
